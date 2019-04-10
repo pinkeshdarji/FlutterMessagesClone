@@ -4,16 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_messages_clone/models/message.dart';
 import 'utility/HexColor.dart';
-
-enum Options {
-  archived,
-  markAllAsRead,
-  blockedContacts,
-  messagesForWeb,
-  darkMode,
-  settings,
-  helpAndFeedback
-}
+import 'OptionMenu.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -35,75 +26,91 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  void createDummyData() {
-    messages.add(Message(
-        from: "Alen",
-        message: "hey, want to meed today",
-        isRead: true,
-        isInContactList: true,
-    backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "Megan",
-        message: "Hows party",
-        isRead: true,
-        isInContactList: true,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "Mike",
-        message: "Called you to inform something,will let you know later on",
-        isRead: false,
-        isInContactList: true,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "963808326",
-        message: "Got it",
-        isRead: true,
-        isInContactList: false,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "Jireb",
-        message: "Yes will come",
-        isRead: false,
-        isInContactList: true,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "7854862541",
-        message: "2 Missed call",
-        isRead: true,
-        isInContactList: false,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "Harry",
-        message: "I have bought it for you",
-        isRead: false,
-        isInContactList: true,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "Wife",
-        message: "Where are you right now?",
-        isRead: true,
-        isInContactList: true,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "Kenny",
-        message: "Are you there?",
-        isRead: true,
-        isInContactList: true,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-    messages.add(Message(
-        from: "Naresh",
-        message: "Whats the status",
-        isRead: true,
-        isInContactList: true,
-        backgroundColor: myCustomMaterialColors[random.nextInt(myCustomMaterialColors.length)]));
-  }
-
+  /**
+   * Create predefined colors to select random color
+   */
   void createSomePredefinedColors() {
     myCustomMaterialColors.add(Colors.yellow);
     myCustomMaterialColors.add(Colors.orange);
     myCustomMaterialColors.add(Colors.purple);
     myCustomMaterialColors.add(Colors.pink);
     myCustomMaterialColors.add(Colors.blue);
+  }
+
+  /**
+   * Creates dummy messages
+   */
+  void createDummyData() {
+    messages.add(Message(
+        from: "Alen",
+        message: "hey, want to meed today",
+        isRead: true,
+        isInContactList: true,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "Megan",
+        message: "Hows party",
+        isRead: true,
+        isInContactList: true,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "Mike",
+        message: "Called you to inform something,will let you know later on",
+        isRead: false,
+        isInContactList: true,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "963808326",
+        message: "Got it",
+        isRead: true,
+        isInContactList: false,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "Jireb",
+        message: "Yes will come",
+        isRead: false,
+        isInContactList: true,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "7854862541",
+        message: "2 Missed call",
+        isRead: true,
+        isInContactList: false,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "Harry",
+        message: "I have bought it for you",
+        isRead: false,
+        isInContactList: true,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "Wife",
+        message: "Where are you right now?",
+        isRead: true,
+        isInContactList: true,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "Kenny",
+        message: "Are you there?",
+        isRead: true,
+        isInContactList: true,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
+    messages.add(Message(
+        from: "Naresh",
+        message: "Whats the status",
+        isRead: true,
+        isInContactList: true,
+        backgroundColor: myCustomMaterialColors[
+            random.nextInt(myCustomMaterialColors.length)]));
   }
 
   @override
@@ -125,7 +132,7 @@ class _HomeState extends State<Home> {
                 color: Colors.grey[800],
               )),
           Container(
-            child: optionMenu(),
+            child: OptionMenu(),
           )
         ],
       ),
@@ -136,10 +143,10 @@ class _HomeState extends State<Home> {
               if (scrollNotification is UserScrollNotification) {
                 switch (scrollNotification.direction) {
                   case ScrollDirection.reverse:
-                    extendFab(true);
+                    _extendFab(true);
                     break;
                   case ScrollDirection.forward:
-                    extendFab(false);
+                    _extendFab(false);
                     break;
                   case ScrollDirection.idle:
                     break;
@@ -151,26 +158,25 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: messages[index].backgroundColor.shade100,
+                      backgroundColor: messages[index].backgroundColor.withOpacity(0.3),
                       radius: 23,
                       child: messages[index].isInContactList
                           ? Text(
                               '${messages[index].from.substring(0, 1)}',
                               style: TextStyle(
                                   fontSize: 22,
-                                  fontFamily: 'Roboto',
-                                  color: messages[index].backgroundColor.shade800),
+                                  color:
+                                      messages[index].backgroundColor.shade800),
                             )
                           : Icon(
                               Icons.person,
                               size: 30,
-                              color: messages[index].backgroundColor.shade800 ,
+                              color: messages[index].backgroundColor.shade800,
                             ),
                     ),
                     title: Text(
                       '${messages[index].from}',
                       style: TextStyle(
-                          fontFamily: 'Roboto',
                           fontWeight: messages[index].isRead
                               ? FontWeight.normal
                               : FontWeight.bold,
@@ -179,7 +185,6 @@ class _HomeState extends State<Home> {
                     subtitle: Text(
                       '${messages[index].message}',
                       style: TextStyle(
-                          fontFamily: 'Roboto',
                           fontWeight: messages[index].isRead
                               ? FontWeight.normal
                               : FontWeight.bold,
@@ -215,10 +220,7 @@ class _HomeState extends State<Home> {
                   child: isExtended
                       ? Text(
                           'Start chat',
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              color: Colors.white,
-                              fontSize: 16),
+                          style: TextStyle(color: Colors.white, fontSize: 16),
                         )
                       : SizedBox.shrink(),
                 )
@@ -230,66 +232,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  PopupMenuButton<Options> optionMenu() {
-    return PopupMenuButton<Options>(
-      onSelected: (Options result) {
-        print(result);
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<Options>>[
-            const PopupMenuItem<Options>(
-              value: Options.archived,
-              child: Text(
-                'Archived',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            const PopupMenuItem<Options>(
-              value: Options.markAllAsRead,
-              child: Text(
-                'Mark all as read',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            const PopupMenuItem<Options>(
-              value: Options.blockedContacts,
-              child: Text(
-                'Blocked contacts',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            const PopupMenuItem<Options>(
-              value: Options.messagesForWeb,
-              child: Text(
-                'Messages for web',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            const PopupMenuItem<Options>(
-              value: Options.darkMode,
-              child: Text(
-                'Enable dark mode',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            const PopupMenuItem<Options>(
-              value: Options.settings,
-              child: Text(
-                'Settings',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-            const PopupMenuItem<Options>(
-              value: Options.helpAndFeedback,
-              child: Text(
-                'Help & feedback',
-                style: TextStyle(fontFamily: 'Roboto'),
-              ),
-            ),
-          ],
-    );
-  }
-
-  extendFab(bool isExtend) {
+  _extendFab(bool isExtend) {
     setState(() {
       isExtended = isExtend;
       _width = isExtended ? 135 : 56;
@@ -298,10 +241,9 @@ class _HomeState extends State<Home> {
   }
 }
 
-//TODO option menu can be improved with list
-//TODO proper font style with theme
-//TODO code correction
-//TODO random color
-//TODO match exact color
+
+
+
+
 //TODO library match coding standard with pedro
 //Different option for color

@@ -12,7 +12,6 @@ class MessagesApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: Colors.white,
           accentColor: Colors.black,
-          fontFamily: 'RobotoMono'
       ),
       home: Home(),
     );
